@@ -46,7 +46,7 @@ const ContactSection = ({ theme }) => {
           viewport={{ once: true }}
           className="mb-14 text-center"
         >
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-gray-100'}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-gray-600'}`}>
             Get In Touch
           </h2>
           <Divider className={`${theme === 'light' ? 'bg-blue-500' : 'bg-blue-400'} h-1 w-20 mx-auto`} />

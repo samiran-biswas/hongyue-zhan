@@ -13,7 +13,7 @@ const ResearchSection = ({ theme, researchExperiences }) => {
           viewport={{ once: true }}
           className="mb-12 text-center"
         >
-          <h2 className={`text-3xl sm:text-4xl font-bold mb-3 ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}>
+          <h2 className={`text-3xl sm:text-4xl font-bold mb-3 ${theme === 'light' ? 'text-gray-800' : 'text-gray-600'}`}>
             Laboratory Research
           </h2>
           <Divider className={`${theme === 'light' ? 'bg-blue-500' : 'bg-blue-400'} h-1 w-20 mx-auto`} />
