@@ -1,83 +1,145 @@
-// src/App.jsx
-import { useState, useEffect } from 'react'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Experience from './components/Experience'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Testimonials from './components/Testimonials'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import { FiArrowUp } from 'react-icons/fi'
-import { FaWhatsapp } from 'react-icons/fa'
-import { animateScroll as scroll } from 'react-scroll'
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FloatButton, Tag } from 'antd';
+import { FiChevronUp } from 'react-icons/fi';
+import HeroSection from './components/HeroSection';
+import AboutSection from './components/AboutSection';
+import ResearchSection from './components/ResearchSection';
+import MedicalSection from './components/MedicalSection';
+import ContactSection from './components/ContactSection';
+import Footer from './components/Footer';
+import FloatingNav from './components/FloatingNav';
 
-function App() {
- 
-  const [showScrollToTop, setShowScrollToTop] = useState(false)
+const App = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-  
-    // Scroll event listener
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollToTop(true)
-      } else {
-        setShowScrollToTop(false)
+      setIsScrolled(window.scrollY > 50);
+      const sections = ['home', 'about', 'research', 'medical', 'contact'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element && scrollPosition >= element.offsetTop && scrollPosition < element.offsetTop + element.offsetHeight) {
+          setActiveSection(section);
+          break;
+        }
       }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  const experiences = [
+    {
+      title: "Head of Mandarin Department",
+      company: "Medical Equality Operative",
+      period: "Dec 2024 - Present",
+      points: [
+        "Develop and oversee medical interpretation training for Mandarin-speaking students",
+        "Create and translate 5+ medical case studies focusing on conditions like diabetes, hyperlipidemia, and hypertension",
+        "Train students on Mandarin medical terminology pronunciation for healthcare settings"
+      ]
+    },
+    {
+      title: "Medical Translator (Mandarin)",
+      company: "Defeating Epilepsy Foundation",
+      period: "Jun 2022 - Present",
+      points: [
+        "Translate 70+ medical documents and ensure accuracy of the translation",
+        "Review medical terminology content and add clarity for Mandarin-speaking epilepsy patients",
+        "Voice-record and translate pharmaceutical guidelines for Mandarin-speaking audiences"
+      ]
+    },
+    {
+      title: "Chapter President",
+      company: "Global Medical Brigades",
+      period: "Jun 2024 - Present",
+      points: [
+        "Lead a 110-member team in organizing 10+ healthcare events, increasing membership by 50%",
+        "Provide training and guidance to members on healthcare initiatives and patient education"
+      ]
     }
+  ];
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const researchExperiences = [
+    {
+      title: "Undergraduate Researcher",
+      company: "Siryaporn Lab",
+      period: "Mar 2024 - Present",
+      points: [
+        "Analyze data on bacterial resistance studies",
+        "Prepare solutions for bacterial studies following SOPs and PPE",
+        "Aliquot chemicals for laboratory use",
+        "Awarded $300+ from UROP for research contributions"
+      ]
+    },
+    {
+      title: "Laboratory Student",
+      company: "Experimental Microbiology Lab Course",
+      period: "Dec 2024 - Mar 2025",
+      points: [
+        "Centrifuged samples for electrophoresis experiments",
+        "Led pH and optical density testing in fermentation tests",
+        "Experienced fast-paced lab environment by processing multiple samples with accuracy"
+      ]
+    },
+    {
+      title: "Laboratory Student",
+      company: "Molecular Biology Lab Course",
+      period: "Sep 2024 - Dec 2024",
+      points: [
+        "Prepared and processed oral specimens for bacterial testing",
+        "Cloned VNTR regions into plasmids and analyzed results for genetic variation",
+        "Maintained detailed lab records and followed laboratory practice in long hours"
+      ]
+    }
+  ];
 
- 
-
-  const scrollToTop = () => {
-    scroll.scrollToTop({
-      duration: 500,
-      smooth: 'easeInOutQuart'
-    })
-  }
-
-  const openWhatsApp = () => {
-    window.open('https://wa.me/919851215184', '_blank')
-  }
+  const skills = [
+    { category: "Laboratory", items: ["Specimen preparation", "Aliquoting", "Centrifugation", "Solution prep", "PCR", "Gel electrophoresis", "Gram staining", "Microscopy"] },
+    { category: "Computer", items: ["Microsoft Office", "Google Workspace", "Canva", "MS Outlook", "Excel", "Word"] },
+    { category: "Language", items: ["Fluent English", "Native Mandarin", "Conversational Japanese"] }
+  ];
 
   return (
-    <div className="relative">
-      {/* WhatsApp button */}
-      <button
-        onClick={openWhatsApp}
-        className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-[#25D366] text-white shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center w-12 h-12"
-        aria-label="Contact via WhatsApp"
-      >
-        <FaWhatsapp size={24} />
-      </button>
+    <div className={`min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} transition-colors duration-300`}>
+      <FloatingNav 
+        activeSection={activeSection} 
+        setActiveSection={setActiveSection} 
+        theme={theme} 
+        isScrolled={isScrolled} 
+      />
 
-      {/* Scroll to top button */}
-      {showScrollToTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-50 p-3 rounded-full bg-secondary text-white shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center w-12 h-12"
-          aria-label="Scroll to top"
-        >
-          <FiArrowUp size={24} />
-        </button>
-      )}
+      <HeroSection theme={theme} />
+      <AboutSection theme={theme} skills={skills} />
+      <ResearchSection theme={theme} researchExperiences={researchExperiences} />
+      <MedicalSection theme={theme} experiences={experiences} />
+      <ContactSection theme={theme} />
+      <Footer theme={theme} />
 
-      <Navbar  />
-      <Hero />
-      <About />
-      <Experience />
-      <Projects />
-      <Skills />
-      <Testimonials />
-      <Contact />
-      <Footer />
+      {/* Theme Toggle and Back to Top */}
+      <FloatButton.Group shape="square" className="right-6 bottom-6">
+        <FloatButton 
+          icon={theme === 'light' ? <span>🌙</span> : <span>☀️</span>}
+          onClick={toggleTheme}
+          tooltip="Toggle theme"
+        />
+        <FloatButton.BackTop 
+          icon={<FiChevronUp />} 
+          visibilityHeight={300}
+        />
+      </FloatButton.Group>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
