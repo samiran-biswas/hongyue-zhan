@@ -111,13 +111,17 @@ const App = () => {
   ];
 
   return (
-    <div className={`min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} transition-colors duration-300`}>
+    <div className={` min-h-screen ${theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'} transition-colors duration-300`}>
+     
+     <div>
+
       <FloatingNav 
         activeSection={activeSection} 
         setActiveSection={setActiveSection} 
         theme={theme} 
         isScrolled={isScrolled} 
       />
+     </div>
 
       <HeroSection theme={theme} />
       <AboutSection theme={theme} skills={skills} />
